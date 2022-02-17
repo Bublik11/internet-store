@@ -1,0 +1,74 @@
+[
+    {    
+        "category": "Лампы",
+        "name": "Лампа №1",
+        "image": "",
+        "description": "Отличная лампа",
+        "price": "1999.99",
+        "quantity": "10"
+    },
+    {    
+        "category": "Лампы",
+        "name": "Лампа №2",
+        "image": "",
+        "description": "Отличная лампа",
+        "price": "1999.99",
+        "quantity": "10"
+    },
+    {    
+        "category": "Лампы",
+        "name": "Лампа №3",
+        "image": "",
+        "description": "Отличная лампа",
+        "price": "1999.99",
+        "quantity": "10"
+    },
+    {    
+        "category": "Стулья",
+        "name": "Стул №1",
+        "image": "",
+        "description": "Отличный стул",
+        "price": "2999.99",
+        "quantity": "20"
+    },
+    {    
+        "category": "Стулья",
+        "name": "Стул №2",
+        "image": "",
+        "description": "Отличный стул",
+        "price": "2999.99",
+        "quantity": "20"
+    },
+    {    
+        "category": "Стулья",
+        "name": "Стул №3",
+        "image": "",
+        "description": "Отличный стул",
+        "price": "2999.99",
+        "quantity": "20"
+    },
+    {    
+        "category": "Диваны",
+        "name": "Диван №1",
+        "image": "",
+        "description": "Отличный диван",
+        "price": "12999.99",
+        "quantity": "5"
+    },
+    {    
+        "category": "Прочее",
+        "name": "Что-то №1",
+        "image": "",
+        "description": "Отличный выбор",
+        "price": "99999.99",
+        "quantity": "5"
+    },
+    {    
+        "category": "Прочее",
+        "name": "Что-то №2",
+        "image": "",
+        "description": "Отличный выбор",
+        "price": "99999.99",
+        "quantity": "5"
+    }
+]
