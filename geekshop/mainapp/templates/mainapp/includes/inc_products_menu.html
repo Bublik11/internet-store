@@ -1,8 +1,16 @@
 <div class="links clearfix">
     <ul class="links-menu">
-        <li><a href="{% url 'products:index'%}">все</a></li>
-        {% for link in products_menu_links %}
-            <li><a href="{% url 'products:category' link.id %}">{{link.name}}</a></li>
+        <li><a href="{% url 'products:index'%}" 
+            {% if request.resolver_match.kwargs.pk is None %}
+                class="active"
+            {% endif %}
+            >все</a></li>
+        {% for link in products_menu %}
+            <li><a href="{% url 'products:category' link.id %}"
+            {% if request.resolver_match.kwargs.pk == link.id %}
+                class="active"
+            {% endif %}
+            >{{link.name}}</a></li>
         {% endfor %}
     </ul>
 </div>

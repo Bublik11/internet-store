@@ -1,17 +1,20 @@
 <div class="header clearfix">
     <a href="{% url 'main' %}" class="logo"></a>
     <ul class="menu">
-        {% for link in main_menu_links %}
+        {% for link in main_menu %}
         <li>
             <a href="{% url link.url %}" 
-            {% if request.resolver_match.url_name == link.url %}
-            class="active"
+            {% if request.resolver_match.view_name == link.url %}
+                class="active"
             {% endif %}>
                 {{ link.name }}
             </a>
         </li>
         {% endfor %}
         {% if user.is_authenticated %}
+            <li><a href="{% url 'basket:view' %}">корзина 
+            {% if user.basket.count %}{{user.basket.count}}{% endif %}
+            </a></li>
             <li><a href="{% url 'auth:edit' %}">{{ user.first_name }}</a></li>
             <li><a href="{% url 'auth:logout' %}">Выйти</a></li>
         {% else %}

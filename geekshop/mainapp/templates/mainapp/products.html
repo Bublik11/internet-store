@@ -10,76 +10,91 @@
     <div class="details">
         
         {% include 'mainapp/includes/inc_products_menu.html' %}
-
-        <div class="details-products">
-            <div class="details-slider">
-                <div class="slider-product">
-                    <img src="{% static 'img/slider1.jpg' %}">
+        
+        {% if request.resolver_match.kwargs.pk is None %}
+            <div class="details-products">
+                <div class="details-slider">
+                    <div class="slider-product">
+                        <img src="{% static 'img/slider1.jpg' %}">
+                    </div>
+                    <div class="slider-control">
+                        <div class="block">
+                            <a href="#">
+                                <img src="{% static 'img/controll.jpg' %}" alt="">
+                                <div class="text"></div>
+                            </a>
+                        </div>
+                        <div class="block">
+                            <a href="#">
+                                <img src="{% static 'img/controll1.jpg'%}" alt="">
+                                <div class="text"></div>
+                            </a>
+                        </div>
+                        <div class="block">
+                            <a href="#">
+                                <img src="{% static 'img/controll2.jpg' %}" alt="">
+                                <div class="text"></div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div class="slider-control">
-                    <div class="block">
-                        <a href="#">
-                            <img src="{% static 'img/controll.jpg' %}" alt="">
-                            <div class="text"></div>
-                        </a>
-                    </div>
-                    <div class="block">
-                        <a href="#">
-                            <img src="{% static 'img/controll1.jpg'%}" alt="">
-                            <div class="text"></div>
-                        </a>
-                    </div>
-                    <div class="block">
-                        <a href="#">
-                            <img src="{% static 'img/controll2.jpg' %}" alt="">
-                            <div class="text"></div>
-                        </a>
+                <div class="description">
+                    <h3 class="big-bold">Отличный стул</h3>
+                    <h3 class="red">горячее предложение</h3>
+                    <p class="price">
+                        2585.9 <span>руб</span>
+                    </p>
+                    <a href="#" class="red-button">
+                        заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                    </a>
+                    <div class="description-text">
+                        <p>
+                            Расположитесь комфортно.
+                        </p>
+                        <p>
+                            Отличное качество материалов
+                            позволит вам это.
+                        </p>
+                        <p>
+                            Различные цвета
+                        </p>
+                        <p>
+                            высочайший уровень
+                            эргономики и прочность.
+                        </p>
                     </div>
                 </div>
             </div>
-            <div class="description">
-                <h3 class="big-bold">Отличный стул</h3>
-                <h3 class="red">горячее предложение</h3>
-                <p class="price">
-                    2585.9 <span>руб</span>
-                </p>
-                <a href="#" class="red-button">
-                    заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
-                </a>
-                <div class="description-text">
-                    <p>
-                        Расположитесь комфортно.
-                    </p>
-                    <p>
-                        Отличное качество материалов
-                        позволит вам это.
-                    </p>
-                    <p>
-                        Различные цвета
-                    </p>
-                    <p>
-                        высочайший уровень
-                        эргономики и прочность.
-                    </p>
-                </div>
-            </div>
-        </div>
+        {% endif %}
         <div class="related">
-            <div class="title clearfix">
-                <h2>Похожие продукты</h2>
-                <a class="explore" href="#">показать все
-                    <img src="{% static 'img/arrow.png' %}" alt="">
-                </a>
-            </div>
+            {% if request.resolver_match.kwargs.pk is not None %}
+                <div class="title clearfix" style="height: 70px">
+                    <h2  style="margin-top: 0px">Товары категории</h2>
+                </div>
+            {% else %}
+                <div class="title clearfix">
+                    <h2>Похожие продукты</h2>
+                    <a class="explore" href="#">показать все
+                        <img src="{% static 'img/arrow.png' %}" alt="">
+                    </a>
+                </div>
+            {% endif %}
             <div class="related-products clearfix">
                 {% for product in products %}
                 <div class="block">
-                    <a href="#">
+                    <a href="
+                    {% if user.is_authenticated %}
+                        {% url 'basket:add' product.pk %}
+                        {% else %}
+                        {% url 'auth:login'%}
+                    {% endif %}
+                    ">
                         <img style="height: 370px; width: 370px;" src="/media/{{ product.image }}" alt="">
                         <div class="text">
                             <img src="{% static 'img/icon-hover.png' %}" alt="img">
                             <h4>{{ product.name }}</h4>
                             <p>{{ product.description }}</p>
+                            <p>{{ product.price }} руб.</p>
                         </div>
                     </a>
                 </div>

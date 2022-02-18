@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from unicodedata import category
+from django.shortcuts import render, get_list_or_404
 from .models import Product, ProductCategory
+from basketapp.models import Basket
 
 
-MAIN_MENU_LINKS = [
+MAIN_MENU = [
     {"url": "main", "name": "домой"},
     {"url": "products:index", "name": "продукты"},
     {"url": "contact", "name": "контакты"},
@@ -17,28 +19,33 @@ def index(request):
         "mainapp/index.html",
         context={
             "title": title,
-            "main_menu_links": MAIN_MENU_LINKS,
+            "main_menu": MAIN_MENU,
             "products": products,
         },
     )
 
 
 def products(request, pk=None):
+    basket = []
+    if request.user.is_authenticated:
+        basket = Basket.objects.filter(user=request.user)
+
     title = "Продукты"
     MENU_CATEGORY = ProductCategory.objects.all()
     if pk is None:
-        products = Product.objects.all()[:3]
+        products = Product.objects.all().order_by("price")
     else:
-        products = Product.objects.filter(category=pk)[:3]
+        products = get_list_or_404(Product, category=pk)
 
     return render(
         request,
         "mainapp/products.html",
         context={
             "title": title,
-            "main_menu_links": MAIN_MENU_LINKS,
-            "products_menu_links": MENU_CATEGORY,
+            "main_menu": MAIN_MENU,
+            "products_menu": MENU_CATEGORY,
             "products": products,
+            "basket": basket,
         },
     )
 
@@ -50,6 +57,6 @@ def contact(request):
         "mainapp/contact.html",
         context={
             "title": title,
-            "main_menu_links": MAIN_MENU_LINKS,
+            "main_menu": MAIN_MENU,
         },
     )
