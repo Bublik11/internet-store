@@ -13,7 +13,7 @@
             <p>
                 Новый уровень комфорта. Отличные характеристики.
             </p>
-            <a href="#" class="button-order">заказать
+            <a href="{% url 'products:index' %}" class="button-order">заказать
                 <img src="{% static 'img/arrow.png' %}" alt="">
             </a>
         </div>
@@ -34,7 +34,7 @@
         <div class="tab-content">
             {% for product in products %}
                 <div class="block">
-                    <a href="#">
+                    <a href="{% url 'products:product' product.pk %}">
                         <img class="main-content" src="/media/{{ product.image }}" alt="">
                         <div class="text">
                             <img src="{% static 'img/icon-hover.png' %}" alt="img">
@@ -51,5 +51,4 @@
             {% endfor %}
         </div>
     </div>
-    <div class="clr"></div>
 {% endblock %}

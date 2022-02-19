@@ -23,9 +23,16 @@ class Product(models.Model):
     price = models.DecimalField(
         verbose_name="Цена", max_digits=9, decimal_places=2, default=0
     )
+    discount = models.PositiveIntegerField(
+        verbose_name="Скидка", default=0
+    )
     quantity = models.PositiveIntegerField(
         verbose_name="Количество на складе", default=0
     )
+
+    @property
+    def discount_price(self):
+        return round(self.price * (100 - self.discount))/100
 
     def __str__(self) -> str:
         return self.name

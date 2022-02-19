@@ -1,5 +1,6 @@
+import random
 from unicodedata import category
-from django.shortcuts import render, get_list_or_404
+from django.shortcuts import render, get_list_or_404, get_object_or_404
 from .models import Product, ProductCategory
 from basketapp.models import Basket
 
@@ -14,28 +15,24 @@ MAIN_MENU = [
 def index(request):
     title = "Главная"
     products = Product.objects.all()[:4]
-    return render(
-        request,
-        "mainapp/index.html",
+    return render(request, "mainapp/index.html",
         context={
             "title": title,
             "main_menu": MAIN_MENU,
             "products": products,
-        },
+        }
     )
 
 
-def products(request, pk=None):
-    basket = []
-    if request.user.is_authenticated:
-        basket = Basket.objects.filter(user=request.user)
-
+def products(request, category_id=None):
     title = "Продукты"
-    MENU_CATEGORY = ProductCategory.objects.all()
-    if pk is None:
-        products = Product.objects.all().order_by("price")
+    hot_product = random.choice(Product.objects.filter(discount__gt=0))
+    products_menu = ProductCategory.objects.all()
+
+    if category_id is None:
+        products = Product.objects.all().order_by("price")[:6]
     else:
-        products = get_list_or_404(Product, category=pk)
+        products = get_list_or_404(Product, category=category_id)
 
     return render(
         request,
@@ -43,9 +40,26 @@ def products(request, pk=None):
         context={
             "title": title,
             "main_menu": MAIN_MENU,
-            "products_menu": MENU_CATEGORY,
+            "products_menu": products_menu,
             "products": products,
-            "basket": basket,
+            "hot_product": hot_product,
+        },
+    )
+
+
+def product(request, product_id=None):
+    product = get_object_or_404(Product, id=product_id)
+    title = product.name
+    products_menu = ProductCategory.objects.all()
+
+    return render(
+        request,
+        "mainapp/product.html",
+        context={
+            "title": title,
+            "main_menu": MAIN_MENU,
+            "products_menu": products_menu,
+            "product": product,
         },
     )
 

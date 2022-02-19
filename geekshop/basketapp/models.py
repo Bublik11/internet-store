@@ -7,15 +7,11 @@ from mainapp.models import Product
 
 
 class BasketManager(models.Manager):
-    def count(self):
-        return len(self.all())
+    def total_quantity(self):
+        return sum(item.quantity for item in self.all())
 
-    def sum(self):
-        sum = 0
-        basket = self.all()
-        for item in basket:
-            sum += item.product.price * item.quantity
-        return sum
+    def total_price(self):
+        return sum(item.product.discount_price for item in self.all())
 
 
 class Basket(models.Model):
