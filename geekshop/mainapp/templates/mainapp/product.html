@@ -1,0 +1,52 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+
+{% block header %}
+<div class="hero-white">
+    {% include 'mainapp/includes/inc_main_menu.html' %}
+</div>
+{% endblock %}
+
+
+{% block content %}
+<div class="details">
+    
+    {% include 'mainapp/includes/inc_products_menu.html' %}
+    
+    <div class="details-products">
+        <div class="details-slider">
+            <div class="slider-product">
+                <img class="hot-product" style="width: 100%; height: auto" src="{{ product.image.url }}">
+            </div>
+        </div>
+        <div class="description">
+            <h3 class="big-bold">{{ product.name }}</h3>
+            {% if product.discount > 0 %}
+            <h3 class="red">горячее предложение</h3>
+            <p class="price">
+                {{ product.discount_price|floatformat:2 }} <span>руб</span>
+                <hr>
+                <span>Старая цена: {{ product.price|floatformat:2 }} руб</span>
+            </p>
+            {% else %}
+            <br>
+            <p class="price">
+                {{ product.discount_price|floatformat:2 }} <span>руб</span>
+                {% endif %}
+            <a href="{% url 'basket:add' product.id %}" 
+            {% if product.discount > 0 %}
+            class="red-button"
+            {% else %}
+            class="red-button" style="background: #f4f4f4; color: #6c6c6c"
+            {% endif %}>
+            заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </a>
+        <div class="description-text">
+            <p>{{ product.description }}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
