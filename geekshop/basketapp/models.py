@@ -1,6 +1,3 @@
-from enum import unique
-from locale import format_string
-from pickle import TRUE
 from django.conf import settings
 from django.db import models
 from mainapp.models import Product
